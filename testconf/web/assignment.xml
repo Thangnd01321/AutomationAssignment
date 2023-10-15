@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="UI Automation Test" verbose="1"
+       parallel="classes" thread-count="4" configfailurepolicy="continue">
+    <listeners>
+        <listener class-name="cucumber.runner.core.Reporter"/>
+    </listeners>
+    <test name="Test 1" annotations="JDK" preserve-order="true">
+        <classes>
+            <class name="cucumber.runner.web.LoginTest"/>
+            <class name="cucumber.runner.web.DropdownTest"/>
+            <class name="cucumber.runner.web.UploadTest"/>
+            <class name="cucumber.runner.web.CheckboxTest"/>
+        </classes>
+    </test>
+</suite>
