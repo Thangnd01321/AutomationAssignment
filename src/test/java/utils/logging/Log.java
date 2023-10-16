@@ -27,7 +27,7 @@ public class Log {
 
   public static void details(String message) {
     if (TestConfig.scenario.get() != null) {
-      TestConfig.scenario.get().log("	" + message);
+      TestConfig.scenario.get().log(message);
     }
     Reporter.log(message + "<p>");
 //    message = "				" + message;

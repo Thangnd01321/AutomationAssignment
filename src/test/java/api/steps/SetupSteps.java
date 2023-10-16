@@ -1,7 +1,9 @@
-package selenium.steps;
+package api.steps;
 
+import api.core.BaseAPI;
 import factory.DataContainer;
 import io.cucumber.java.*;
+import org.assertj.core.api.Assertions;
 import selenium.core.BasePage;
 import selenium.core.DriverManager;
 import utils.common.RandomString;
@@ -9,10 +11,10 @@ import utils.logging.Log;
 import utils.settings.TestConfig;
 import utils.testhelper.ScreenRecording;
 import utils.testhelper.TestParams;
-import utils.testhelper.TestResult;
 
 import java.awt.*;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class SetupSteps {
@@ -22,7 +24,6 @@ public class SetupSteps {
   RandomString random;
 
   public SetupSteps(DataContainer data) throws IOException {
-    this.data = data;
 
     if (random == null) {
       random = new RandomString(8, ThreadLocalRandom.current());
@@ -32,32 +33,20 @@ public class SetupSteps {
     }
   }
 
-  @Before("@web")
+  @Before("@api")
   public void beforeScenario(Scenario scenario)
       throws IOException, AWTException, InterruptedException {
-    // Start screen recording
-    recording.startRecording(TestConfig.SCREEN_RECORDING_PATH.toString(), random.nextString());
-
-    // Test site and API
-    data.site = TestParams.WEB_URL;
+    // Test site for API
+    BaseAPI.url = TestParams.API_URL;
 
     Log.details("	Scenario: " + scenario.getName());
     // set scenario for logging
     TestConfig.scenario.set(scenario);
-
-    // Start browser before each scenario
-    page = new BasePage();
   }
 
-  @After("@web")
+  @After("@api")
   public void afterScenario(Scenario scenario) throws IOException, InterruptedException {
     try {
-      // Capture screenshot into cucumber report
-      if (page.getDriver() != null) {
-        String ssName = random.nextString() + ".png";
-        TestResult.embedScreenCapture(scenario, ssName);
-      }
-
       if (scenario.getStatus() == Status.PASSED) Log.details("Test Status: Passed!!!!");
       else if (scenario.getStatus() == Status.FAILED) {
         Log.details("Test Status: Failed!!!!");
@@ -74,7 +63,7 @@ public class SetupSteps {
     TestConfig.scenario.set(null);
   }
 
-  @AfterStep("@web")
+  @AfterStep("@api")
   public void afterStep(Scenario scenario) throws IOException {}
 
   // For blank datatable value

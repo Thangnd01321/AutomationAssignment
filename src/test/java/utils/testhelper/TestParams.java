@@ -4,6 +4,7 @@ import constants.Constant;
 
 public class TestParams {
 
+  public static final String API_URL = getApiUrl();
   private static final String HEADLESS = "headless";
   public static final boolean IS_HEADLESS = isHeadless();
   private static final String LOGGING = "logging";
