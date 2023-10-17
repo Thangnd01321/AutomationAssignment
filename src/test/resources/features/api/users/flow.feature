@@ -3,13 +3,13 @@ Feature: User can write review
 
   Background:
     Given Following user does not exist
-      | email             |
-      | david@example.com |
+      | email           |
+      | pit@example.com |
 
   Scenario: User can write review for a completed order
     When Send POST to create a new user
-      | username      | email             | password     |
-      | David Charles | david@example.com | userPass123@ |
+      | username | email           | password     |
+      | Pit Ford | pit@example.com | userPass123@ |
     And Send GET to get list of categories
     And Send GET to get list of products
     And Send POST to place an order with a product

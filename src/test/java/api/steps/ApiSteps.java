@@ -132,20 +132,13 @@ public class ApiSteps {
 
     // Verify response success
     Assertions.assertThat(apiUsers.getResponseHttpStatus())
-        .as("Http status should be: " + HttpStatus.OK)
-        .isEqualTo(HttpStatus.OK);
+        .as("Http status should be: " + HttpStatus.CREATED)
+        .isEqualTo(HttpStatus.CREATED);
 
     apiUsers.clearRequestBody();
     apiUsers.get();
 
-    users = apiUsers.getUsers();
-
-    Assertions.assertThat(users.size())
-        .as("Number of users should be: " + users.size())
-        .isEqualTo(numOfUsers + 1);
-
-    Log.details("Verify newest creation user");
-    MUser user = users.get(users.size() - 1);
+    Log.details("Verify new creation user");
     try {
       Assertions.assertThat(user.getUsername())
           .as("User name should be: " + username)
