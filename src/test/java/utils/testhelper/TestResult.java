@@ -1,6 +1,7 @@
 package utils.testhelper;
 
 import io.cucumber.java.Scenario;
+import io.cucumber.java.Status;
 import net.masterthought.cucumber.Configuration;
 import net.masterthought.cucumber.ReportBuilder;
 import net.masterthought.cucumber.reducers.ReducingMethod;
@@ -13,6 +14,7 @@ import utils.settings.TestConfig;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,5 +59,20 @@ public class TestResult {
     ReportBuilder reportBuilder = new ReportBuilder(jsonFiles, configuration);
 
     reportBuilder.generateReports();
+  }
+
+  public static void embedScreenRecording(Scenario scenario, File record, String type) {
+    if (record == null) {
+      return;
+    }
+    String folder = TestConfig.SCREEN_RECORDING_PATH.toString();
+    String html =
+        "<video width=\"640\" height=\"480\" controls>\n"
+            + "  <source src=\""
+            + Paths.get(folder, record.getName())
+            + "\" type=\"video/mp4\">\n"
+            + "</video>";
+
+    scenario.attach(html.getBytes(), type, scenario.getName());
   }
 }

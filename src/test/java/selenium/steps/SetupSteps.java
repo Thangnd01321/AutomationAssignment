@@ -1,7 +1,11 @@
 package selenium.steps;
 
+import cucumber.runner.core.TestRunner;
 import factory.DataContainer;
 import io.cucumber.java.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import selenium.core.BasePage;
 import selenium.core.DriverManager;
 import utils.common.RandomString;
@@ -63,6 +67,8 @@ public class SetupSteps {
         Log.details("Test Status: Failed!!!!");
       }
 
+      // Upload anyway
+      TestResult.embedScreenRecording(scenario, recording.stopRecording(), "text/plain");
     } catch (Exception e) {
       Log.details(e.getMessage());
     } finally {
